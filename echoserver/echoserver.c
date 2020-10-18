@@ -46,16 +46,30 @@ int main() {
   addr_size = sizeof client_addr;
   newfd = accept(sockfd, (struct sockaddr *)&client_addr, &addr_size);
 
-  // echo client
+  // print client inf
+  char ipstr[INET6_ADDRSTRLEN];
+  int port;
+  
+  if (getpeername(newfd, (struct sockaddr *)&client_addr, &addr_size) < 0) {
+    error("ERROR getpeername failed");
+  }
+  else {
+    struct sockaddr_in *s = (struct sockaddr_in *)&client_addr;
+    port = ntohs(s->sin_port);
+    inet_ntop(AF_INET, &s->sin_addr, ipstr, sizeof ipstr);
+    printf("Client IP address: %s\n", ipstr);
+    printf("Client port      : %d\n", port);    
+  }
+  
+  // echo to client
   if (recv(newfd, &buf, BUFSIZE, 0) > 0) {
-    if (send(newfd, &buf, BUFSIZE, 0) > 0) {
+    if (send(newfd, &buf, BUFSIZE, 0) > 0) 
       printf("Echoed message: %s\n", buf);
-    }
   }
   else {
     printf("Recv returned 0, client closed connection.\n");
   }
-
+  
   // cleanup
   close(sockfd);
   close(newfd);

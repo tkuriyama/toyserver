@@ -12,6 +12,8 @@
 
 #define BUFSIZE 1024
 
+/* Network Operations */
+
 void error(char *msg) {
     perror(msg);
     exit(0);
@@ -33,9 +35,37 @@ void print_client_info(int newfd, struct sockaddr_storage *client_addr,
   }
 }
 
-char *process_request(char *buf) {
-  return buf;
+/* Database helpers */
+
+void ewrap(int status, char *name) {
+  if (status == 0)
+    printf("> Error: %s process returned error code\n", name);
+  else 
+    printf("> Success: %s\n", name); 
 }
+
+void ewrapResponse(int status, char **msg) {
+  if (status == 0)
+    strcpy(*msg, "Error: process returned error code\n");
+  else 
+    strcpy(*msg, "Success\n");
+}
+
+/* Database Operations */
+
+void process_request(char *buf, char *response) {
+  if (strcmp(buf, "init\n") == 0) {
+    if (db.initialized) 
+      strcpy(response, "DB already initialized\n");
+    else
+      ewrapResponse(init_database(), &response);
+  }
+  else {
+    strcpy(response, "Command not recognized.\n");
+  } 
+}
+
+/* Main */
 
 int main() {
   
@@ -77,7 +107,7 @@ int main() {
       }
       else {
 	printf("Received: %s", buf);
-	strcpy(response, process_request(buf));
+	process_request(buf, response);
       }
       
       if (send(newfd, &response, BUFSIZE, 0) > 0) 
@@ -86,13 +116,15 @@ int main() {
 	error("> ERROR failed to send");
 
       buf[0] = '\0';
+      response[0] = '\0';
     }
     else {
       printf("> Recv returned 0, client closed connection.\n");
       break;
     }
   }
-  
+
+  ewrap(clear_database(), "Closing DB");
   close(sockfd);
   close(newfd);
   freeaddrinfo(res);

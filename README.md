@@ -28,7 +28,8 @@ Echo from server: hello server
 
 ## Course Server
 
-A client-server implementation of `coursedb`, a toy database from [systems programming exercises](https://www.inf.usi.ch/carzaniga/edu/sysprog17s/exercises.html) with the [`coursedb.h` API](https://github.com/tkuriyama/toyserver/blob/master/courseserver/coursedb.h).
+Implementing a few API calls from `coursedb`, a toy database from [systems programming exercises](https://www.inf.usi.ch/carzaniga/edu/sysprog17s/exercises.html), for client-server interaction.
+
 
 <hr>
 

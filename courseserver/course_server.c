@@ -151,7 +151,7 @@ int main() {
 
   ewrap(clear_database(), "Closing DB");
   close(sockfd);
-  fclose(clientfd);
+  fclose(clientfd);   // this closes clientfd and also fd
   freeaddrinfo(res);
   printf("> Bye.\n");
 }

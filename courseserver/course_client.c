@@ -1,8 +1,6 @@
+// Adapted from:
 // http://www.cs.cmu.edu/afs/cs/academic/class/15213-f00/www/class24code/echoclient.c
-/* 
- * echoclient.c - A simple connection-based client
- * usage: echoclient <host> <port>
- */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -14,9 +12,6 @@
 
 #define BUFSIZE 1024
 
-/* 
- * error - wrapper for perror
- */
 void error(char *msg) {
     perror(msg);
     exit(0);
@@ -57,25 +52,33 @@ int main(int argc, char **argv) {
     serveraddr.sin_port = htons(portno);
 
     /* connect: create a connection with the server */
-    if (connect(sockfd, &serveraddr, sizeof(serveraddr)) < 0) 
+    if (connect(sockfd, (struct sockaddr *)&serveraddr, sizeof(serveraddr)) < 0) 
       error("ERROR connecting");
+    printf("> Connected...\n");
+    
+    while (1) { 
+      printf("Enter command: ");
+      bzero(buf, BUFSIZE);
+      fgets(buf, BUFSIZE, stdin);
 
-    /* get message line from the user */
-    printf("Please enter msg: ");
-    bzero(buf, BUFSIZE);
-    fgets(buf, BUFSIZE, stdin);
+      n = write(sockfd, buf, strlen(buf));
+      if (n < 0) 
+	error("ERROR writing to socket");
 
-    /* write: send the message line to the server */
-    n = write(sockfd, buf, strlen(buf));
-    if (n < 0) 
-      error("ERROR writing to socket");
+      if (strcmp(buf, "bye\n") == 0) {
+	printf("> Closing connection.\n");
+	break;
+      }	
+      
+      bzero(buf, BUFSIZE);
+      n = read(sockfd, buf, BUFSIZE);
+      if (n < 0) 
+	error("ERROR reading from socket");
+      printf("Server response: %s\n", buf);
 
-    /* read: print the server's reply */
-    bzero(buf, BUFSIZE);
-    n = read(sockfd, buf, BUFSIZE);
-    if (n < 0) 
-      error("ERROR reading from socket");
-    printf("Echo from server: %s", buf);
+      buf[0] = '\0';
+    }
+    
     close(sockfd);
     return 0;
 }

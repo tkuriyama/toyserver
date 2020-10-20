@@ -79,10 +79,13 @@ int main() {
 	printf("Received: %s", buf);
 	strcpy(response, process_request(buf));
       }
+      
       if (send(newfd, &response, BUFSIZE, 0) > 0) 
 	printf("Sent: %s\n", response);
       else
 	error("> ERROR failed to send");
+
+      buf[0] = '\0';
     }
     else {
       printf("> Recv returned 0, client closed connection.\n");

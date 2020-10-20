@@ -71,8 +71,9 @@ int main() {
   
   while (1) {
     if (recv(newfd, &buf, BUFSIZE, 0) > 0) {
-      if (strcmp(buf, "bye") == 0) {
-	printf("> Client asked to close connection.");
+      if (strcmp(buf, "bye\n") == 0) {
+	printf("> Client asked to close connection.\n");
+	break;
       }
       else {
 	printf("Received: %s", buf);

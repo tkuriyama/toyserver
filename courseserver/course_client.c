@@ -76,7 +76,7 @@ int main(int argc, char **argv) {
 	error("ERROR reading from socket");
       printf("Server response: %s\n", buf);
 
-      buf[0] = '\0';
+      memset(buf, 0, strlen(buf));
     }
     
     close(sockfd);

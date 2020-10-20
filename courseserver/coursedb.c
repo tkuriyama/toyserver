@@ -77,6 +77,18 @@ void print_stats() {
   printf("-------------------\n\n");
 }
 
+void print_stats_sock(FILE *fd) {
+  fprintf(fd, "\n--- Database Stats\n");
+  fprintf(fd, "Course ct / active / max:     %d / %d / %d\n",
+	  db.course_ct, active_courses(), db.course_max_ct);
+  fprintf(fd, "Student ct / active / max:    %d / %d / %d\n",
+	  db.student_ct, active_students(), db.student_max_ct);
+  fprintf(fd, "Enrollment ct / active / max: %d / %d / %d\n",
+	  db.enrollment_ct, active_enrollments(), db.enrollment_max_ct);
+  fprintf(fd, "-------------------\n");
+  fflush(fd);
+}
+
 /*** Courses ***/
 
 int add_course(int id, const char * title, int year, char semester) {

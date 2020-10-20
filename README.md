@@ -26,6 +26,12 @@ Echo from server: hello server
 
 <hr>
 
+## Course Server
+
+A client-server implementation of `coursedb`, a toy database from [systems programming exercises](https://www.inf.usi.ch/carzaniga/edu/sysprog17s/exercises.html) with the [`coursedb.h` API](https://github.com/tkuriyama/toyserver/blob/master/courseserver/coursedb.h).
+
+<hr>
+
 ## References 
 
 * https://beej.us/guide/bgnet/html/

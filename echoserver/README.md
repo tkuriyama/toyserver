@@ -1,4 +1,7 @@
+
 # Echo Server
+
+A simple echo server in C that works for [this simple client](http://www.cs.cmu.edu/afs/cs/academic/class/15213-f00/www/class24code/echoclient.c).
 
 ```
 √ echoserver % ./echoserver_comp

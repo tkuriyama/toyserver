@@ -3,20 +3,13 @@
 
 Toy server exercises in C (and other sys prog languages).
 
-
-## Echo Server 
-
-A C echo server that works for [this simple client](http://www.cs.cmu.edu/afs/cs/academic/class/15213-f00/www/class24code/echoclient.c).
-
 <hr>
 
-## Course Server
+* [Echo Server](https://github.com/tkuriyama/toyserver/tree/master/echoserver): simple C echo server
 
-Implementing a few API calls from `coursedb`, a toy database from [systems programming exercises](https://www.inf.usi.ch/carzaniga/edu/sysprog17s/exercises.html), for client-server interaction.
+* [Course Server](https://github.com/tkuriyama/toyserver/tree/master/courseserver): client-server API calls 
 
-## Go Echo Server
-
-A simple echo server in Go using Unix sockets.
+* [Echo Server Go](https://github.com/tkuriyama/toyserver/tree/master/echoserver_go): simple echo server in Go using Unix sockets
 
 <hr>
 

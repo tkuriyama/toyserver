@@ -1,6 +1,6 @@
 ## Go Echo Server
 
-Based on examples from [Eli Bendersky's post](https://eli.thegreenplace.net/2019/unix-domain-sockets-in-go/).
+Based on Unix domain sockets examples from [Eli Bendersky's post](https://eli.thegreenplace.net/2019/unix-domain-sockets-in-go/).
 
 The server runs in an infinite loop, accepting an arbitrary number of clients. 
 

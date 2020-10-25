@@ -1,5 +1,8 @@
 # Course Server
 
+Implementing client-server interactions in C for a few API calls from `coursedb`, a toy database from [systems programming exercises](https://www.inf.usi.ch/carzaniga/edu/sysprog17s/exercises.html).
+
+
 ```
 √ courseserver % ./course_server_comp                                                  
 > Started server on 127.0.0.1:3490

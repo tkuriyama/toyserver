@@ -1,7 +1,7 @@
 
 # Toy Server 
 
-Toy server exercises in C (and other sys prog languages).
+Toy server exercises in C and Go.
 
 <hr>
 

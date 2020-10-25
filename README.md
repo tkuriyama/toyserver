@@ -14,7 +14,7 @@ A C echo server that works for [this simple client](http://www.cs.cmu.edu/afs/cs
 
 Implementing a few API calls from `coursedb`, a toy database from [systems programming exercises](https://www.inf.usi.ch/carzaniga/edu/sysprog17s/exercises.html), for client-server interaction.
 
-# Go Echo Server
+## Go Echo Server
 
 A simple echo server in Go using Unix sockets.
 

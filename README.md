@@ -11,7 +11,7 @@ Toy server exercises in C and Go.
 
 * [Echo Server Go](https://github.com/tkuriyama/toyserver/tree/master/echoserver_go): simple echo server in Go using Unix sockets
 
-* [Chat Server Go](): broadcast chat server in Go over Unix sockets
+* [Chat Server Go](https://github.com/tkuriyama/toyserver/tree/master/chatserver_go): broadcast chat server in Go over Unix sockets
 
 <hr>
 

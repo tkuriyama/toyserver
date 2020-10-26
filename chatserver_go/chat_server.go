@@ -11,9 +11,8 @@ import (
 )
 
 type Client struct {
-	name   string
-	conn   net.Conn
-	writer io.Writer
+	name string
+	conn net.Conn
 }
 
 type ChatServer struct {
@@ -36,13 +35,13 @@ func main() {
 	defer l.Close()
 
 	var server = ChatServer{}
-
 	for {
 		conn, err := l.Accept()
 		if err != nil {
 			log.Fatal("Accept error:", err)
 		}
-		client := Client{"client", conn, bufio.NewWriter(conn)}
+		client := Client{"default", conn} //, bufio.NewWriter(conn)}
+		client.conn.Write([]byte("You are now connected to chat server.\n"))
 		register(&server, &client)
 		go serve(&server, &client)
 	}
@@ -79,23 +78,30 @@ func serve(s *ChatServer, c *Client) {
 			log.Printf("Read error for %s: %v", c.name, err)
 			break
 		}
+		log.Printf("Client %s sent: %s", c.name, msg)
 		if msg == "bye\n" {
 			log.Printf("Client %s requested disconnect\n", c.name)
 			break
+		} else if len(msg) > 6 && msg[:4] == "name" {
+			name := msg[5:(len(msg) - 1)]
+			log.Printf("Client %s set name to %s", c.name, name)
+			c.name = name
 		} else {
-			text := fmt.Sprintf("Message from %s: %s\n", c.name, msg)
-			broadcast(s, text)
+			text := fmt.Sprintf("%s says: %s\n", c.name, msg)
+			go broadcast(s, &text)
 		}
 	}
 
 	deregister(s, c)
 }
 
-func broadcast(s *ChatServer, msg string) {
-	s.mux.Lock()
-	defer s.mux.Unlock()
-
+func broadcast(s *ChatServer, msg *string) {
+	log.Printf("Server has %d clients", len(s.clients))
+	log.Printf("Broadcasting: %s", *msg)
 	for _, client := range s.clients {
-		client.writer.Write([]byte(msg))
+		_, err := client.conn.Write([]byte(*msg))
+		if err != nil {
+			log.Printf("Write error: %v", err)
+		}
 	}
 }

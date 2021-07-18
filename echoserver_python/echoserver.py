@@ -1,19 +1,26 @@
 import asyncio # type: ignore
 
 
+################################################################################
+
+
 async def handle_echo(reader, writer):
-    data = await reader.read(100)
-    message = data.decode()
-    addr = writer.get_extra_info('peername')
 
-    print(f"Received {message!r} from {addr!r}")
+    while True:
+        data = await reader.read(100)
+        message = data.decode()
+        addr = writer.get_extra_info('peername')
 
-    print(f"Send: {message!r}")
-    writer.write(data)
-    await writer.drain()
+        print(f"Received {message!r} from {addr!r}")
 
-    print("Close the connection")
-    writer.close()
+        print(f"Send: {message!r}")
+        writer.write(data)
+        await writer.drain()
+
+        if message.lower().strip() == 'bye':
+            print("Close the connection")
+            writer.close()
+            break
 
 
 async def main():
@@ -25,6 +32,9 @@ async def main():
 
     async with server:
         await server.serve_forever()
+
+
+################################################################################
 
 
 if __name__ == '__main__':
